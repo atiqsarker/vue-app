@@ -1,6 +1,6 @@
 export default {
     state: {
-        welcomeMessage: 'this is our Home Component'
+        welcomeMessage: 'This is our Home Component'
     },
     getters:{
         welcome(state){

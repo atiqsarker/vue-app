@@ -1,12 +1,14 @@
 <template>
+
+
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">Home Component</div>
-                        <router-link :to="{ path: 'hello' }" class="btn btn-info">Hello</router-link>
+                    <div class="card-header">Hello Component</div>
+                    <router-link :to="{ path: '/' }" class="btn btn-info">Home</router-link>
                     <div class="card-body">
-                            {{welcome}}
+                        <h1>Hello World</h1>
                     </div>
                 </div>
             </div>
@@ -16,12 +18,7 @@
 
 <script>
     export default {
-        name: "Home",
-        computed:{
-            welcome(){
-                return this.$store.getters.welcome
-            }
-        }
+        name: "Hello",
 
     }
 </script>
@@ -29,5 +26,3 @@
 <style scoped>
 
 </style>
-
-

@@ -4,6 +4,7 @@ import VueRouter from 'vue-router'
 import Vuex from 'vuex'
 import { routes } from './route'
 import MainApp from './components/MainApp'
+import storeage from './store'
 
 
 Vue.use(VueRouter)
@@ -13,7 +14,7 @@ const  router = new VueRouter({
     routes,
     mode: 'history'
 })
-import storeage from './store'
+
 const store = new Vuex.Store(storeage)
 
 const app = new Vue({
