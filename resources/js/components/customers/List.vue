@@ -38,7 +38,11 @@
     export default {
         name: "customer-list",
         mounted(){
-            return this.$store.dispatch('getCustomers')
+            if (this.customers.length){
+                return
+            }else {
+                return this.$store.dispatch('getCustomers')
+            }
         },
         computed: {
             customers() {

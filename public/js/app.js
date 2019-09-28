@@ -2125,7 +2125,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "customer-list",
   mounted: function mounted() {
-    return this.$store.dispatch('getCustomers');
+    if (this.customers.length) {
+      return;
+    } else {
+      return this.$store.dispatch('getCustomers');
+    }
   },
   computed: {
     customers: function customers() {
@@ -2246,11 +2250,7 @@ __webpack_require__.r(__webpack_exports__);
         return; // console.log(this.errors);
       }
 
-      axios.post('/api/customers/new', this.$data.customer, {
-        headers: {
-          "Authorization": "Bearer ".concat(this.currentUser.token)
-        }
-      }).then(function (response) {
+      axios.post('/api/customers/new', this.$data.customer).then(function (response) {
         _this.$router.push('/customers');
       });
     },
@@ -2335,14 +2335,16 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     var _this = this;
 
-    // alert(`${this.$route.params.id}`);
-    axios.get("/api/customers/".concat(this.$route.params.id), {
-      headers: {
-        "Authorization": "Bearer ".concat(this.currentUser.token)
-      }
-    }).then(function (response) {
-      _this.customer = response.data.customer;
-    });
+    if (this.customers.length) {
+      this.customer = this.customers.find(function (customer) {
+        return customer.id == _this.$route.params.id;
+      });
+    } else {
+      // alert(`${this.$route.params.id}`);
+      axios.get("/api/customers/".concat(this.$route.params.id)).then(function (response) {
+        _this.customer = response.data.customer;
+      });
+    }
   },
   data: function data() {
     return {
@@ -2352,6 +2354,9 @@ __webpack_require__.r(__webpack_exports__);
   computed: {
     currentUser: function currentUser() {
       return this.$store.getters.currentUser;
+    },
+    customers: function customers() {
+      return this.$store.getters.customers;
     }
   }
 });
@@ -56710,6 +56715,7 @@ function initialize(store, router) {
 
     return Promise.reject(error);
   });
+  axios.defaults.headers.common["Authorization"] = "Bearer ".concat(store.getters.currentUser.token);
 }
 
 /***/ }),
@@ -57646,11 +57652,7 @@ var user = Object(_Helpers__WEBPACK_IMPORTED_MODULE_0__["getLocalUser"])();
     },
     // end login action
     getCustomers: function getCustomers(context) {
-      axios.get('api/customers', {
-        headers: {
-          "Authorization": "Bearer ".concat(context.state.currentUser.token)
-        }
-      }).then(function (response) {
+      axios.get('api/customers').then(function (response) {
         // console.log(response.data);
         context.commit('updateCustomers', response.data);
       });

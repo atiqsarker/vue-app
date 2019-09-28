@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Customer;
+use App\Http\Requests\CreateCustomerRequest;
 
 class CustomerController extends Controller
 {
@@ -12,7 +13,7 @@ class CustomerController extends Controller
         return response()->json($customers);
     }
 
-    public function store(Request $request){
+    public function store(CreateCustomerRequest $request){
         $customers = new Customer();
         $customers->name = $request->name;
         $customers->email = $request->email;
